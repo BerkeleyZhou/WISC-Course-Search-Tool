@@ -24,7 +24,7 @@ def SearchOnePage(coreUrl, url):
 
     # Search results
     results = soup.find_all('div', {'class': 'searchresult'})
-    print(results)
+    # print(results)
     result = results[0]
     
     # Searched course
@@ -40,7 +40,7 @@ def SearchOnePage(coreUrl, url):
     preresuisiteCourses = []
 
     for preresuisiteCourseUrl in preresuisiteCourseUrls:
-        preresuisiteCourses.append(preresuisiteCourseUrl.get_text() + ':' + coreUrl + preresuisiteCourseUrl['href'])
+        preresuisiteCourses.append(coreUrl + preresuisiteCourseUrl['href'])
 
     preresuisiteCoursesNames = []
     for preresuisiteCourseUrl in preresuisiteCourseUrls:

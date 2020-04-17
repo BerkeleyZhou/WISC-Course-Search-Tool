@@ -2,6 +2,7 @@ import tkinter as tk
 import CoursesGet
 
 url = 'https://guide.wisc.edu'
+relatedUrls = []
 
 # Window setup
 window = tk.Tk()
@@ -39,12 +40,9 @@ courseListVar = tk.StringVar()
 relatedCourseList = tk.Listbox(window, listvariable=courseListVar)
 relatedCourseList.place(x=20, y=30 + 25 + 15 + 25 + 15 + 25 + 15 + 150 + 15 + 25 + 15 + 150 + 15, width=460, height=150)
 
+def SearchUrl(searchUrl):
+    global relatedUrls
 
-# Search function
-def Search():
-    # Keyword search
-    keyWords = searchBox.get()
-    searchUrl = CoursesGet.GenerateSearchUrl(url, keyWords)
     searchResult = CoursesGet.SearchOnePage(url, searchUrl)
     print(searchResult)
 
@@ -59,17 +57,30 @@ def Search():
     prerequisiteText.delete('1.0', 'end')
     prerequisiteText.insert('end', searchResult[2])
 
+    relatedUrls = searchResult[3]
+
     relatedCourseList.delete(0, 'end')
     for relatedCourse in searchResult[4]:
         relatedCourseList.insert('end', relatedCourse)
 
+# Search function
+def Search():
+    global relatedUrls
+
+    # Keyword search
+    keyWords = searchBox.get()
+    searchUrl = CoursesGet.GenerateSearchUrl(url, keyWords)
+    
+    SearchUrl(searchUrl)
+
 def FurtherSearch():
+    global relatedUrls
+
     if (relatedCourseList.size() != 0):
         chooseIndex = relatedCourseList.curselection()[0]
-        searchBox.delete(0, 'end')
-        searchBox.insert('end', relatedCourseList.get(chooseIndex))
-
-        Search()
+        # print(relatedUrls)
+        searchUrl = relatedUrls[chooseIndex]
+        SearchUrl(searchUrl)
     else:
         print(None)
 
