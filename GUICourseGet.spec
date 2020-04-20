@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['GUICourseGet.py'],
-             pathex=['D:\\Python_Project\\UW_Courses_Get\\WISC-Course-Search-Tool'],
+             pathex=['/Users/berkeleyzhou/Documents/Python_Projects/WISC-Course-Search-Tool'],
              binaries=[],
              datas=[],
              hiddenimports=[],
